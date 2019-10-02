@@ -41,6 +41,10 @@ class Model {
             b.y += deltaT * b.vy;
         }
     }
+    private void rectToPolar() {
+
+
+    }
 
     /**
      * Simple inner class describing balls.
