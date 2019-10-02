@@ -9,6 +9,7 @@ package com.company;
  * @author Simon Robillard
  *
  */
+import java.lang.Math;
 class Model {
 
     double areaWidth, areaHeight;
@@ -40,11 +41,35 @@ class Model {
             b.x += deltaT * b.vx;
             b.y += deltaT * b.vy;
         }
+        rectToPolar();
+        if (ballCollision()) {
+            System.out.println("collision");
+        }
     }
+    boolean ballCollision() {
+        double lineOfCollision = Math.sqrt(
+                balls[0].polarRadius*balls[0].polarRadius + balls[1].polarRadius*balls[1].polarRadius
+                - (2 * balls[0].polarRadius*balls[1].polarRadius * Math.cos(Math.abs(balls[0].theta - balls[1].theta))));
+        return lineOfCollision < (balls[0].radius + balls[1].radius);
+
+
+    }
+
+    private void polarToRect() {
+        for (Ball b : balls) {
+            b.x = b.polarRadius * Math.cos(b.theta);
+            b.y = b.polarRadius * Math.sin(b.theta);
+        }
+    }
+
     private void rectToPolar() {
-
-
+        for (Ball b : balls) {
+            b.theta = Math.atan(b.y / b.x);
+            b.polarRadius = Math.sqrt(b.x * b.x + b.y * b.y);
+        }
     }
+
+
 
     /**
      * Simple inner class describing balls.
@@ -62,6 +87,6 @@ class Model {
         /**
          * Position, speed, and radius of the ball. You may wish to add other attributes.
          */
-        double x, y, vx, vy, radius;
+        double x, y, vx, vy, radius, polarRadius, theta;
     }
 }
