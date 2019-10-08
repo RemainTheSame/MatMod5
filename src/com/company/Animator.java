@@ -15,7 +15,8 @@ import com.company.Model.Ball;
  *
  * @author Simon Robillard
  *
- */
+ */                // compute new position according to the speed of the ball
+
 @SuppressWarnings("serial")
 public final class Animator extends JPanel implements ActionListener {
 
